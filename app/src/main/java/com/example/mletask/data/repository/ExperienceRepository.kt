@@ -16,6 +16,8 @@ class ExperienceRepository @Inject constructor(
 ) {
     fun getRecommended(): Flow<List<Experience>> = dao.getRecommended()
 
+    suspend fun getRecommendedLive(): List<Experience> = api.getRecommendedExperiences().experiences
+
     fun getRecent(): Flow<List<Experience>> = dao.getRecent()
 
     suspend fun refreshExperiences() {
@@ -28,5 +30,8 @@ class ExperienceRepository @Inject constructor(
     }
     suspend fun selectedExperience(id: String): ExperienceByIdResponse {
         return api.getExperienceDetails(id)
+    }
+    suspend fun searchExperiences(query: String): List<Experience> {
+        return api.searchExperiences(query).experiences
     }
 }

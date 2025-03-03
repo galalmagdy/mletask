@@ -8,6 +8,17 @@ plugins {
 }
 
 android {
+    packagingOptions {
+        resources {
+            excludes += setOf(
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+                "META-INF/DEPENDENCIES"
+            )
+        }
+    }
     namespace = "com.example.mletask"
     compileSdk = 35
 
@@ -61,7 +72,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // Jetpack Compose
     implementation(libs.ui)
-    implementation(libs.androidx.material)
+    //implementation(libs.androidx.material)
     implementation(libs.androidx.navigation.compose)
 
     // ViewModel & LiveData
@@ -88,4 +99,20 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.accompanist.pager)
+
+    //Test
+    // Compose UI testing
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
+
+    // Mockk for ViewModel mocking
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.mockk.android)
+
+    // Coroutines test
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Hilt testing
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
 }

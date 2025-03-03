@@ -12,6 +12,8 @@ data class Experience(
     @SerializedName("title") val title: String,
     @SerializedName("cover_photo") val imageUrl: String,
     @SerializedName("description") val description: String,
+    @SerializedName("views_no") val views: String,
+    @SerializedName("address") val location: String,
     @SerializedName("likes_no") val likes: Int,
     @SerializedName("recommended") val isRecommended: Int
 )

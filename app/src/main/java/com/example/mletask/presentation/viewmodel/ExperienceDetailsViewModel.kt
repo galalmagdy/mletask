@@ -8,13 +8,14 @@ import com.example.mletask.data.repository.ExperienceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ExperienceDetailsViewModel @Inject constructor(
     private val repository: ExperienceRepository
-) : ViewModel(){
+) : ViewModel() {
     private val _experienceDetails = MutableStateFlow<ExperienceByIdResponse?>(null)
     val experienceDetails: StateFlow<ExperienceByIdResponse?> = _experienceDetails
 
@@ -23,10 +24,17 @@ class ExperienceDetailsViewModel @Inject constructor(
             _experienceDetails.value = repository.selectedExperience(id)
         }
     }
+
     fun likeExperience(id: String) {
         viewModelScope.launch {
             repository.likeExperience(id)
-            loadExperienceDetails(id)
+            _experienceDetails.update { currentExperience ->
+                currentExperience?.copy(
+                    searchedExperience = currentExperience.searchedExperience.copy(
+                        likes = currentExperience.searchedExperience.likes + 1
+                    )
+                )
+            }
         }
     }
 }

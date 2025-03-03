@@ -16,7 +16,7 @@ interface  Apis {
     @GET("api/v2/experiences")
     suspend fun getRecentExperiences(): ExperienceResponse
 
-    @GET("api/v2/experiences?filter[title]={search_text}")
+    @GET("api/v2/experiences")
     suspend fun searchExperiences(@Query("filter[title]") searchText: String): ExperienceResponse
 
     @GET("api/v2/experiences/{id}")
