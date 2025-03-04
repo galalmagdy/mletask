@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Close
@@ -24,6 +25,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -37,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -77,7 +80,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             state = scrollState,
-            modifier = Modifier.fillMaxSize().background(Color.White)
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
         ) {
             // Sticky Header for Search Bar
             stickyHeader {
@@ -130,7 +135,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         .background(Color.White)
                 ) {
                     Text(text = "Welcome!", fontSize = 22.sp, fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(4.dp).background(Color.White))
+                    Spacer(modifier = Modifier
+                        .height(4.dp)
+                        .background(Color.White))
                     Text(
                         text = "Now you can explore any experience in 360 degrees and get all the details about it all in one place",
                         fontSize = 14.sp,
@@ -141,7 +148,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
             // Recommended Experiences
             item {
-                Spacer(modifier = Modifier.height(8.dp).background(Color.White))
+                Spacer(modifier = Modifier
+                    .height(8.dp)
+                    .background(Color.White))
                 Text(
                     text = "Recommended Experiences",
                     fontSize = 22.sp,
@@ -169,7 +178,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
             // Most Recent Experiences
             item {
-                Spacer(modifier = Modifier.height(8.dp).background(Color.White))
+                Spacer(modifier = Modifier
+                    .height(8.dp)
+                    .background(Color.White))
                 Text(
                     text = "Most Recent",
                     fontSize = 22.sp,
@@ -209,7 +220,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 TextField(
                     value = mainSearchQuery,
                     onValueChange = { mainSearchQuery = it },
-                    modifier = Modifier.fillMaxWidth().background(Color.White),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White),
                     placeholder = { Text("Search experiences...") },
                     singleLine = true,
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
@@ -250,7 +263,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 .fillMaxSize()
                 .background(Color.White)
         ) {
-            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)) {
                 var searchQuery by remember { mutableStateOf(mainSearchQuery) }
 
                 LaunchedEffect(Unit) {
@@ -274,25 +289,38 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 }
 
                 // Search Bar
-                TextField(
-                    value = searchQuery,
-                    onValueChange = {
-                        searchQuery = it
-                        viewModel.searchExperiences(it)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text("Search experiences...") },
-                    singleLine = true,
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search Icon") },
-                    colors = TextFieldDefaults.textFieldColors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                        containerColor = Color.Transparent
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.LightGray.copy(alpha = 0.2f)) 
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = {
+                            searchQuery = it
+                            viewModel.searchExperiences(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.Gray.copy(alpha = 0.4f)),
+                        placeholder = { Text("Search experiences...") },
+                        singleLine = true,
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Search,
+                                contentDescription = "Search Icon"
+                            )
+                        },
+                        colors = TextFieldDefaults.textFieldColors(
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent,
+                            containerColor = Color.Transparent
+                        )
                     )
-                )
+                }
 
-                Spacer(modifier = Modifier.height(8.dp).background(Color.White))
 
                 LazyColumn(
                     modifier = Modifier.weight(1f)
