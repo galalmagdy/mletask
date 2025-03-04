@@ -7,7 +7,6 @@ import com.example.mletask.data.repository.ExperienceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +31,7 @@ class HomeViewModel @Inject constructor(
         loadRecommendedExperiences()
     }
 
-    fun loadExperiences() {
+    private fun loadExperiences() {
         viewModelScope.launch {
             repository.refreshExperiences()
             repository.getRecent().collect {
@@ -40,18 +39,18 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-    fun loadRecommendedExperiences() {
+    private fun loadRecommendedExperiences() {
         viewModelScope.launch {
             repository.getRecommended().collect {
                 _RecommendedExperiences.value = it
             }
         }
     }
-    fun loadRecommendedExperiencesLive() {
+/*    fun loadRecommendedExperiencesLive() {
         viewModelScope.launch {
             _RecommendedExperiences.value = repository.getRecommendedLive()
         }
-    }
+    }*/
 
     fun likeExperience(id: String) {
         viewModelScope.launch {

@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    packagingOptions {
+/*    packagingOptions {
         resources {
             excludes += setOf(
                 "META-INF/LICENSE.md",
@@ -18,7 +18,7 @@ android {
                 "META-INF/DEPENDENCIES"
             )
         }
-    }
+    }*/
     namespace = "com.example.mletask"
     compileSdk = 35
 
@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.test.junit4.android)
+    implementation(libs.androidx.navigation.testing)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -101,18 +103,15 @@ dependencies {
     implementation(libs.accompanist.pager)
 
     //Test
-    // Compose UI testing
-    androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.ui.test.manifest)
+// Unit testing
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation(libs.kotlin.test) // Kotlin test framework
+    testImplementation(libs.mockk.v1133) // MockK for mocking
+    testImplementation(libs.kotlinx.coroutines.test.v160) // Coroutines testing
 
-    // Mockk for ViewModel mocking
-    testImplementation(libs.mockk)
-    androidTestImplementation(libs.mockk.android)
-
-    // Coroutines test
-    testImplementation(libs.kotlinx.coroutines.test)
-
-    // Hilt testing
-    androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+// Instrumented testing
+    androidTestImplementation(libs.androidx.ui.test.junit4.v100) // Compose testing
+    androidTestImplementation(libs.androidx.junit.ktx) // Android JUnit with Kotlin extensions
+    androidTestImplementation(libs.androidx.espresso.core.v361) // Espresso
+    androidTestImplementation(libs.mockk.android.v1133) // MockK for Android
 }

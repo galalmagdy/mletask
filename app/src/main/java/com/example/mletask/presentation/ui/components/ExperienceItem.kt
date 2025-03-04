@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.example.mletask.R
 import com.example.mletask.data.model.Experience
 
 @Composable
@@ -49,7 +50,7 @@ fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Un
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column {
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.fillMaxWidth() .background(Color.White)) {
                 // Experience Image
                 Image(
                     painter = rememberAsyncImagePainter(experience.imageUrl),
@@ -63,14 +64,14 @@ fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Un
 
                 // 360-Degree Icon (Center)
                 Icon(
-                    //painter = painterResource(id = R.drawable.ic_360), // Replace with actual icon
-                    imageVector = Icons.Default.Face, // Replace with actual icon
+                    painter = painterResource(id = R.drawable.ic_360), // Replace with actual icon
+                    //imageVector = Icons.Default.Face, // Replace with actual icon
                     contentDescription = "360 Experience",
                     tint = Color.White,
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .size(40.dp)
-                        .background(Color.Black.copy(alpha = 0.5f), shape = CircleShape)
+                        .size(100.dp)
+                        .background(Color.Transparent)
                         .padding(8.dp)
                 )
 
@@ -120,12 +121,11 @@ fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Un
                 )
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
-
             // Title & Like Count
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(Color.White)
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically

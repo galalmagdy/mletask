@@ -2,7 +2,6 @@ package com.example.mletask.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mletask.data.model.Experience
 import com.example.mletask.data.model.ExperienceByIdResponse
 import com.example.mletask.data.repository.ExperienceRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

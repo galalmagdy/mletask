@@ -1,6 +1,5 @@
 package com.example.mletask.data.remote
 
-import com.example.mletask.data.model.Experience
 import com.example.mletask.data.model.ExperienceByIdResponse
 import com.example.mletask.data.model.ExperienceResponse
 import com.example.mletask.data.model.LikeResponse
