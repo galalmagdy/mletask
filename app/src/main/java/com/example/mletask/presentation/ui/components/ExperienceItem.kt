@@ -26,6 +26,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +45,9 @@ import com.example.mletask.data.model.Experience
 
 @Composable
 fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Unit) {
+    // State to track if the experience has been liked
+    var isLiked by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,7 +57,7 @@ fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Un
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column {
-            Box(modifier = Modifier.fillMaxWidth() .background(Color.White)) {
+            Box(modifier = Modifier.fillMaxWidth().background(Color.White)) {
                 // Experience Image
                 Image(
                     painter = rememberAsyncImagePainter(experience.imageUrl),
@@ -65,7 +72,6 @@ fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Un
                 // 360-Degree Icon (Center)
                 Icon(
                     painter = painterResource(id = R.drawable.ic_360), // Replace with actual icon
-                    //imageVector = Icons.Default.Face, // Replace with actual icon
                     contentDescription = "360 Experience",
                     tint = Color.White,
                     modifier = Modifier
@@ -139,11 +145,19 @@ fun ExperienceItem(experience: Experience, onClick: () -> Unit, onLike: () -> Un
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = "${experience.likes}", fontSize = 14.sp)
-                    IconButton(onClick = onLike) {
+                    IconButton(
+                        onClick = {
+                            if (!isLiked) {
+                                onLike()
+                                isLiked = true
+                            }
+                        },
+                        enabled = !isLiked
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Favorite,
                             contentDescription = "Like",
-                            tint = Color.Red
+                            tint = if (isLiked) Color.Red else Color.Gray
                         )
                     }
                 }
